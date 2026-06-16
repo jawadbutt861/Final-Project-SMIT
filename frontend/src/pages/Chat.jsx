@@ -18,7 +18,8 @@ export default function Chat() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:5000');
+    const socketUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
+    socketRef.current = io(socketUrl);
     socketRef.current.emit('user_connected', user.id);
     socketRef.current.on('receive_message', (msg) => {
       setMessages(prev => [...prev, msg]);
